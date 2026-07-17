@@ -410,8 +410,14 @@ function montaAtalhos(){
     b.setAttribute('aria-pressed', filtro===s);
     b.innerHTML = `<span class="ponto"></span><span class="nome">${NOME_CURTO[s]||s}</span><span class="qt">${DADOS.filter(d=>d.sec===s).length}</span>`;
     b.onclick = ()=>{
-      filtro = (filtro===s) ? 'todas' : s;
+      const selecionando = filtro !== s;
+      filtro = selecionando ? s : 'todas';
       montaAtalhos(); render();
+      if(selecionando){
+        requestAnimationFrame(()=>{
+          document.querySelector('main').scrollIntoView({behavior:'smooth',block:'start'});
+        });
+      }
     };
     frag.appendChild(b);
   });
